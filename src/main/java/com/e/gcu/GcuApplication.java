@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.e.gcu.domain.Categoria;
 import com.e.gcu.domain.Cidade;
+import com.e.gcu.domain.Cliente;
+import com.e.gcu.domain.Endereco;
 import com.e.gcu.domain.Estado;
 import com.e.gcu.domain.Produto;
+import com.e.gcu.domain.enums.TipoCliente;
 import com.e.gcu.repositories.CategoriaRepository;
 import com.e.gcu.repositories.CidadeRepository;
+import com.e.gcu.repositories.ClienteRepository;
+import com.e.gcu.repositories.EnderecoRepository;
 import com.e.gcu.repositories.EstadoRepository;
 import com.e.gcu.repositories.ProdutoRepository;
 
@@ -27,6 +32,10 @@ public class GcuApplication implements CommandLineRunner {
 	private EstadoRepository estadoRepository;
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	@Autowired
+	private ClienteRepository clienteRepository;
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(GcuApplication.class, args);
@@ -65,6 +74,17 @@ public class GcuApplication implements CommandLineRunner {
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 		
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "09211129388", TipoCliente.PESSOAFISICA);
+		
+		cli1.getTelefones().addAll(Arrays.asList("30212288", "999083312"));
+		
+		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 203", "Jardim", "88030111", cli1, c1);
+		Endereco e2 = new Endereco(null, "Av. Mattos", "105", "Sala 600", "Centro", "38210000", cli1, c2);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2));
 		
 	}
 
