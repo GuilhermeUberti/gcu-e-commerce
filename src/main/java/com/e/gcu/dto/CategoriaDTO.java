@@ -2,12 +2,19 @@ package com.e.gcu.dto;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.e.gcu.domain.Categoria;
 
+@SuppressWarnings("deprecation")
 public class CategoriaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
+	
+	@NotEmpty(message = "Preenchimento Obrigatório!")
+	@Length(min = 4, max = 80, message = "O tamanho deve conter entre 4 e 80 caracteres!")
 	private String nome;
 	
 	public CategoriaDTO() {
